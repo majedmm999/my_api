@@ -1,6 +1,6 @@
 const express= require('express');
-// const Product = require('../models/product');
-// const Category = require("../models/category");
+const Product = require('../models/product');
+const Category = require("../models/category");
 const router= express.Router();
 
 router.get('/category',async (req,res)=>{
