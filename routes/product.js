@@ -1,6 +1,6 @@
 const express= require('express');
-const Product = require('../models/product');
-const Category = require("../models/category");
+// const Product = require('../models/product');
+// const Category = require("../models/category");
 const router= express.Router();
 
 router.get('/category',async (req,res)=>{
@@ -79,7 +79,7 @@ router.post('/product/post', (req,res)=>{
     const product = new Product({
     title:req.body.title,
     desc:req.body.desc,
-    color:req.body.color,
+    imageUrl:req.body.imageUrl,
     });
     product.save().then((data)=>{
       res.json({
