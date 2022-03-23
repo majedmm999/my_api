@@ -1,17 +1,27 @@
 const express= require('express');
 const Product = require('../models/product');
+const Category = require("../models/category");
 const router= express.Router();
 
-router.get('/Home',async (req,res)=>{
+router.get('/category',async (req,res)=>{
  try{
-    const product = await Product.find();
-    res.json(product);
+    const ll = await Category.find();
+    res.json(ll);
  
  }catch(er){
   console.log(er);
  }
 })
-router.get('/:id',async (req,res)=>{
+router.get('/product',async (req,res)=>{
+    try{
+       const product = await Product.find();
+       res.json(product);
+    
+    }catch(er){
+     console.log(er);
+    }
+   })
+router.get('/product/search//:id',async (req,res)=>{
     try{
        const product = await Product.findById(req.params.id);
        res.json(product);
@@ -20,7 +30,16 @@ router.get('/:id',async (req,res)=>{
      console.log(er);
     }
 })
-router.delete('/:id',async (req,res)=>{
+router.get('/category/search//:id',async (req,res)=>{
+    try{
+       const category = await Category.findById(req.params.id);
+       res.json(category);
+    
+    }catch(er){
+     console.log(er);
+    }
+})
+router.delete('/product/delet/:id',async (req,res)=>{
     try{
        const product = await Product.deleteOne({"_id" : req.params.id});
        res.json(product);
@@ -29,7 +48,16 @@ router.delete('/:id',async (req,res)=>{
      console.log(er);
     }
 })
-router.patch('/:id',async (req,res)=>{
+router.delete('/category/delet/:id',async (req,res)=>{
+    try{
+       const category = await Category.deleteOne({"_id" : req.params.id});
+       res.json(category);
+    
+    }catch(er){
+     console.log(er);
+    }
+})
+router.patch('/product/patch/:id',async (req,res)=>{
     try{
        const product = await Product.updateOne({"_id" : req.params.id } , {"title" : req.body.title});
        res.json(product);
@@ -38,13 +66,35 @@ router.patch('/:id',async (req,res)=>{
      console.log(er);
     }
 })
-router.post('/post', (req,res)=>{
+router.patch('/category/patch/:id',async (req,res)=>{
+    try{
+       const category = await Category.updateOne({"_id" : req.params.id } , {"title" : req.body.title});
+       res.json(category);
+    
+    }catch(er){
+     console.log(er);
+    }
+})
+router.post('/product/post', (req,res)=>{
     const product = new Product({
     title:req.body.title,
     desc:req.body.desc,
     color:req.body.color,
     });
     product.save().then((data)=>{
+      res.json({
+          "masage" : "created producted" ,
+          "data" : data ,
+      })
+    })
+})
+router.post('/category/post', (req,res)=>{
+    const category = new Category({
+    text:req.body.text,
+    desc:req.body.desc,
+    imageUrl:req.body.imageUrl,
+    });
+    category.save().then((data)=>{
       res.json({
           "masage" : "created producted" ,
           "data" : data ,
