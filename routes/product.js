@@ -5,8 +5,8 @@ const router= express.Router();
 
 router.get('/category',async (req,res)=>{
  try{
-    const ll = await Category.find();
-    res.json(ll);
+    const category = await Category.find();
+    res.json({category});
  
  }catch(er){
   console.log(er);
